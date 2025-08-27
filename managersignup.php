@@ -206,13 +206,12 @@
 
 
 
-
+    <footer>
+        <div class="container">
+            <p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
+        </div>
+    </footer>
 
     </body>
 
-  <footer class="container-fluid bg-4 text-center">
-  <br>
-  <p> EMMANUEL SYSTEMS 2025 | &copy All Rights Reserved </p>
-  <br>
-  </footer>
 </html>

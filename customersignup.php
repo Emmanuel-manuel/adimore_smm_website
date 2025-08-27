@@ -192,5 +192,12 @@
       
     </div>
     </div>
+
+    <footer>
+        <div class="container">
+            <p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
+        </div>
+    </footer>
+    
     </body>
 </html>

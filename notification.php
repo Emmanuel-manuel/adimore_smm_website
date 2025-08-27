@@ -110,7 +110,7 @@ $fullname = $user['fullname'];
                 
                 <div class="notification-list">
                     <!-- Unread Notification -->
-                    <div class="notification-card unread" data-status="unread">
+                    <!-- <div class="notification-card unread" data-status="unread">
                         <h4 class="notification-title">
                             <i class="fas fa-bullhorn text-danger"></i> Server Maintenance Scheduled
                             <span class="label label-danger pull-right">Important</span>
@@ -124,74 +124,52 @@ $fullname = $user['fullname'];
                         <div class="notification-actions">
                             <button class="btn-mark-read">Mark as Read</button>
                         </div>
-                    </div>
+                    </div> -->
                     
-                    <!-- Unread Notification -->
-                    <div class="notification-card unread" data-status="unread">
-                        <h4 class="notification-title">
-                            <i class="fas fa-gift text-success"></i> Special Offer - 20% Bonus
-                            <span class="label label-success pull-right">Promotion</span>
-                        </h4>
-                        <div class="notification-time">
-                            <i class="far fa-clock"></i> Yesterday, 3:45 PM
-                        </div>
-                        <div class="notification-content">
-                            Enjoy a 20% bonus on all deposits made this week! Use promo code BONUS20 during checkout to claim your extra credits. This offer is valid until Friday.
-                        </div>
-                        <div class="notification-actions">
-                            <button class="btn-mark-read">Mark as Read</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Read Notification -->
-                    <div class="notification-card" data-status="read">
-                        <h4 class="notification-title">
-                            <i class="fas fa-info-circle text-info"></i> New Services Added
-                            <span class="label label-info pull-right">Update</span>
-                        </h4>
-                        <div class="notification-time">
-                            <i class="far fa-clock"></i> 2 days ago
-                        </div>
-                        <div class="notification-content">
-                            We've added 10 new social media services to our panel, including TikTok views, Instagram story views, and YouTube comments. Check them out in the services section!
-                        </div>
-                        <div class="notification-actions">
-                            <button class="btn-mark-read" disabled>Marked as Read</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Read Notification -->
-                    <div class="notification-card" data-status="read">
-                        <h4 class="notification-title">
-                            <i class="fas fa-exclamation-triangle text-warning"></i> Payment Issue Resolved
-                            <span class="label label-warning pull-right">Alert</span>
-                        </h4>
-                        <div class="notification-time">
-                            <i class="far fa-clock"></i> 4 days ago
-                        </div>
-                        <div class="notification-content">
-                            The issue with PayPal payments has been resolved. All payment methods are now working correctly. We apologize for any inconvenience caused.
-                        </div>
-                        <div class="notification-actions">
-                            <button class="btn-mark-read" disabled>Marked as Read</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Read Notification -->
-                    <div class="notification-card" data-status="read">
-                        <h4 class="notification-title">
-                            <i class="fas fa-trophy text-primary"></i> Your Order Has Been Completed
-                        </h4>
-                        <div class="notification-time">
-                            <i class="far fa-clock"></i> 1 week ago
-                        </div>
-                        <div class="notification-content">
-                            Your order #ORD-28742 for Instagram followers has been successfully completed. Thank you for your business!
-                        </div>
-                        <div class="notification-actions">
-                            <button class="btn-mark-read" disabled>Marked as Read</button>
-                        </div>
-                    </div>
+                    <?php
+                // Fetch user email
+                $username = $_SESSION['login_user2'];
+                $sql_user = "SELECT email FROM customer WHERE username='$username'";
+                $result_user = $conn->query($sql_user);
+
+                if ($result_user && $result_user->num_rows > 0) {
+                    $row_user = $result_user->fetch_assoc();
+                    $user_email = $row_user['email'];
+
+                    // Fetch notifications (responses) for this email
+                    $sql_notifications = "SELECT id, Subject, Message, Response, Status, created_at 
+                                            FROM contact 
+                                            WHERE Email='$user_email' AND Response IS NOT NULL AND Response <> '' 
+                                            ORDER BY created_at DESC";
+                    $result_notif = $conn->query($sql_notifications);
+
+                    if ($result_notif && $result_notif->num_rows > 0) {
+                        while ($notif = $result_notif->fetch_assoc()) {
+                            $status = ($notif['Status'] == 'unread') ? 'unread' : 'read';
+                            echo '<div class="notification-card '.$status.'" data-id="'.$notif['id'].'" data-status="'.$status.'">
+                                    <h4 class="notification-title">
+                                        <i class="fas fa-envelope '.($status=='unread'?'text-danger':'text-muted').'"></i> '.$notif['Subject'].'
+                                    </h4>
+                                    <div class="notification-time">
+                                        <i class="far fa-clock"></i> '.$notif['created_at'].'
+                                    </div>
+                                    <div class="notification-content">
+                                        <strong>Your message:</strong> '.$notif['Message'].'<br>
+                                        <strong>Admin response:</strong> '.$notif['Response'].'
+                                    </div>
+                                    <div class="notification-actions">';
+                            if ($status == 'unread') {
+                                echo '<button class="btn-mark-read">Mark as Read</button>';
+                            } else {
+                                echo '<button class="btn-mark-read" disabled>Marked as Read</button>';
+                            }
+                            echo '</div></div>';
+                        }
+                    } else {
+                        echo "<p style='text-align:center;'>No notifications yet.</p>";
+                    }
+                }
+                ?>
                 </div>
             </div>
         </div>
@@ -199,7 +177,7 @@ $fullname = $user['fullname'];
 
     <footer>
         <div class="container">
-            <p>Copyright 2023 &copy; SMM Panel. All rights reserved.</p>
+            <p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
         </div>
     </footer>
 
@@ -221,33 +199,26 @@ $fullname = $user['fullname'];
             });
             
             // Mark as read functionality
-            $('.btn-mark-read').click(function() {
+            $('.notification-list').on('click', '.btn-mark-read', function() {
                 var card = $(this).closest('.notification-card');
-                card.removeClass('unread');
-                card.attr('data-status', 'read');
-                $(this).text('Marked as Read').prop('disabled', true);
-                
-                // Update notification badge count
-                updateNotificationCount();
-            });
-            
-            // Mark all as read
-            $('.mark-all-read').click(function() {
-                $('.notification-card.unread').each(function() {
-                    $(this).removeClass('unread');
-                    $(this).attr('data-status', 'read');
-                    $(this).find('.btn-mark-read').text('Marked as Read').prop('disabled', true);
+                var notifId = card.data('id');
+
+                $.post("update_notification.php", { id: notifId }, function(response) {
+                    if (response === "success") {
+                        card.removeClass('unread').addClass('read');
+                        card.attr('data-status', 'read');
+                        card.find('.btn-mark-read').text('Marked as Read').prop('disabled', true);
+
+                        updateNotificationCount();
+                    }
                 });
-                
-                // Update notification badge count
-                updateNotificationCount();
             });
-            
+
             // Function to update notification badge
             function updateNotificationCount() {
                 var unreadCount = $('.notification-card.unread').length;
                 $('.notification-badge').text(unreadCount);
-                
+
                 if (unreadCount === 0) {
                     $('.notification-badge').hide();
                 } else {

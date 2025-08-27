@@ -80,14 +80,32 @@ else if (isset($_SESSION['login_user2'])) {
            <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome <?php echo $_SESSION['login_user2']; ?> </a></li>
             <li><a href="userdashboard.php"><span class="glyphicon glyphicon-dashboard"></span> Dashboard </a></li>
-            <li class="active" ><a href="notification.php"><span class="glyphicon glyphicon-shopping-cart"></span> Notification
+            <li class="active" ><a href="notification.php"><span class="glyphicon glyphicon-bell"></span> Notification
             (<?php
-              if(isset($_SESSION["notification"])){
-              $count = count($_SESSION["notification"]); 
-              echo "$count"; 
-            }
-              else
-                echo "0";
+                require_once 'connection.php';
+                $conn = Connect();
+
+                // Get logged in user's username
+                $username = $_SESSION['login_user2'];
+
+                // Fetch their email from the customer table
+                $sql_user = "SELECT email FROM customer WHERE username='$username'";
+                $result_user = $conn->query($sql_user);
+
+                if ($result_user && $result_user->num_rows > 0) {
+                    $row_user = $result_user->fetch_assoc();
+                    $user_email = $row_user['email'];
+
+                    // Count responses for this email
+                    $sql_count = "SELECT COUNT(*) AS total FROM contact WHERE Email='$user_email' AND Response IS NOT NULL AND Response <> ''";
+                    $result_count = $conn->query($sql_count);
+                    $row_count = $result_count->fetch_assoc();
+                    echo $row_count['total'];
+                } else {
+                    echo "0";
+                }
+
+                $conn->close();
               ?>)
              </a></li>
             <li><a href="logout_u.php"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>
@@ -200,7 +218,14 @@ $conn->close();
 
 <!-- FontAwesome (if not already loaded) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     </body>
+
+<footer>
+        <div class="container">
+            <p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
 
 
   

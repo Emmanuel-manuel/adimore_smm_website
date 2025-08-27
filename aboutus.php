@@ -77,14 +77,32 @@ else if (isset($_SESSION['login_user2'])) {
            <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome <?php echo $_SESSION['login_user2']; ?> </a></li>
             <li><a href="foodlist.php"><span class="glyphicon glyphicon-cutlery"></span> Food Zone </a></li>
-            <li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart 
+            <li><a href="notification.php"><span class="glyphicon glyphicon-bell"></span> Notification 
             (<?php
-              if(isset($_SESSION["cart"])){
-              $count = count($_SESSION["cart"]); 
-              echo "$count"; 
-            }
-              else
-                echo "0";
+                require_once 'connection.php';
+                $conn = Connect();
+
+                // Get logged in user's username
+                $username = $_SESSION['login_user2'];
+
+                // Fetch their email from the customer table
+                $sql_user = "SELECT email FROM customer WHERE username='$username'";
+                $result_user = $conn->query($sql_user);
+
+                if ($result_user && $result_user->num_rows > 0) {
+                    $row_user = $result_user->fetch_assoc();
+                    $user_email = $row_user['email'];
+
+                    // Count responses for this email
+                    $sql_count = "SELECT COUNT(*) AS total FROM contact WHERE Email='$user_email' AND Response IS NOT NULL AND Response <> ''";
+                    $result_count = $conn->query($sql_count);
+                    $row_count = $result_count->fetch_assoc();
+                    echo $row_count['total'];
+                } else {
+                    echo "0";
+                }
+
+                $conn->close();
               ?>)
             </a></li>
             <li><a href="logout_u.php"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>
@@ -130,5 +148,12 @@ else {
     </div>
 
       <!-- <iframe src="https://www.google.com/maps/place/Le+Cafe/@11.9316155,79.8335933,17z/data=!3m1!4b1!4m5!3m4!1s0x3a53636a24873e45:0x7f1e7ad6a30982dd!8m2!3d11.9316103!4d79.835782" style="width: 250px"></iframe> -->
-         </body>
+      
+        <footer>
+        <div class="container">
+            <p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
+        </div>
+    </footer>
+        
+      </body>
 </html>
