@@ -1,6 +1,7 @@
-body,html {
+body,
+html {
   height: 100%;
- }
+}
 
 body {
   padding-top: 50px;
@@ -10,7 +11,7 @@ body {
 
 }
 
-#myBtn{
+#myBtn {
   display: none;
   position: fixed;
   bottom: 20px;
@@ -24,12 +25,13 @@ body {
   padding: 15px;
   border-radius: 10px;
 }
+
 #myBtn:hover {
   background-color: darkgreen;
   color: white;
 }
 
-.bg-4{
+.bg-4 {
   outline: none;
   background-color: green;
   color: white;
@@ -38,7 +40,7 @@ body {
 
 }
 
-footer{
+footer {
   display: block;
 }
 
@@ -47,7 +49,7 @@ footer{
   padding: 10px 40px 60px;
   margin: 10px 0px 60px;
   border: 1px solid GREY;
-  opacity:0.9;
+  opacity: 0.9;
 }
 
 
@@ -60,22 +62,56 @@ footer{
 }
 
 /*for paragrah below form */
-.paragraph1{
+.paragraph1 {
   text-align: center;
   padding: 60px;
-  font-family: "Times Roman New"
+  font-family: "Times Roman New";
   font-size: 20px;
   background-color: black;
   color: white;
 }
 
 /*for Heading name "Food Exploria" */
-.edit{
+.edit {
   text-shadow: 2px 2px 5px lightgreen;
   color: green;
 }
 
 /* to resize few texts "JUGAD CODE" */
-.edit2{
+.edit2 {
   font-size: 20px;
+}
+
+/* Whatsapp icon*/
+.whatsapp-float {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 15px;
+  bottom: 20px;
+  left: 20px;
+  /* Moved to bottom-left */
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 40px;
+  font-size: 50px;
+  box-shadow: 2px 2px 5px #999;
+  z-index: 1000;
+  text-decoration: none;
+}
+
+.whatsapp-float i {
+  font-size: 50px;
+}
+
+.whatsapp-text {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.whatsapp-float:hover {
+  background-color: #1ebc57;
+  color: #fff;
+  text-decoration: none;
 }

@@ -16,6 +16,7 @@ session_start();
   <body>
 
 
+
     <button onclick="topFunction()" id="myBtn" title="Go to top">
       <span class="glyphicon glyphicon-chevron-up"></span>
     </button>
@@ -78,11 +79,11 @@ else if (isset($_SESSION['login_user2'])) {
   ?>
            <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome <?php echo $_SESSION['login_user2']; ?> </a></li>
-            <li><a href="foodlist.php"><span class="glyphicon glyphicon-cutlery"></span> Food Zone </a></li>
-            <li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart
-              (<?php
-              if(isset($_SESSION["cart"])){
-              $count = count($_SESSION["cart"]); 
+            <li><a href="userdashboard.php"><span class="glyphicon glyphicon-dashboard"></span> Dashboard </a></li>
+            <li class="active" ><a href="notification.php"><span class="glyphicon glyphicon-shopping-cart"></span> Notification
+            (<?php
+              if(isset($_SESSION["notification"])){
+              $count = count($_SESSION["notification"]); 
               echo "$count"; 
             }
               else
@@ -190,7 +191,17 @@ $conn->close();
 }
 ?>
 
+       <!-- WhatsApp Floating Button -->
+       <a href="https://wa.me/254798814567" target="_blank" class="whatsapp-float">
+          <i class="fab fa-whatsapp"></i>
+          <span class="whatsapp-text">Contact us via WhatsApp 24/7</span>
+        </a>
+
+
+<!-- FontAwesome (if not already loaded) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
      </body>
+
 
   
 </html>

@@ -66,7 +66,7 @@ if(isset($_SESSION['login_user1'])){
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome <?php echo $_SESSION['login_user1']; ?> </a></li>
             <li><a href="myrestaurant.php">MANAGER CONTROL PANEL</a></li>
-            <li><a href="logout_m.php"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>
+            <li><a href="logout_u.php"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>
           </ul>
 <?php
 }
@@ -75,11 +75,10 @@ else if (isset($_SESSION['login_user2'])) {
            <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome <?php echo $_SESSION['login_user2']; ?> </a></li>
             <li><a href="userdashboard.php"><span class="glyphicon glyphicon-dashboard"></span> Dashboard </a></li>
-            <!-- <li><a href="foodlist.php"><span class="glyphicon glyphicon-cutlery"></span> Food Zone </a></li> -->
-            <li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart
-              (<?php
-              if(isset($_SESSION["cart"])){
-              $count = count($_SESSION["cart"]); 
+            <li class="active" ><a href="notification.php"><span class="glyphicon glyphicon-shopping-cart"></span> Notification
+            (<?php
+              if(isset($_SESSION["notification"])){
+              $count = count($_SESSION["notification"]); 
               echo "$count"; 
             }
               else

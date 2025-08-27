@@ -1,6 +1,7 @@
-body,html {
+body,
+html {
   height: 100%;
- }
+}
 
 body {
   padding-top: 50px;
@@ -10,7 +11,7 @@ body {
 
 }
 
-#myBtn{
+#myBtn {
   display: none;
   position: fixed;
   bottom: 20px;
@@ -24,18 +25,19 @@ body {
   padding: 15px;
   border-radius: 10px;
 }
+
 #myBtn:hover {
   background-color: darkgreen;
   color: white;
 }
 
-.bg-4{
+.bg-4 {
   background-color: #2f2f2f;
   color: #ffffff;
 
 }
 
-footer{
+footer {
   display: block;
 }
 
@@ -44,5 +46,5 @@ footer{
   padding: 10px 40px 60px;
   margin: 10px 0px 60px;
   border: 1px solid GREY;
-  opacity:0.9;
+  opacity: 0.9;
 }

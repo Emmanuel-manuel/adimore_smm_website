@@ -11,7 +11,7 @@ else
 // Define $username and $password
 $username=$_POST['username'];
 $password=$_POST['password'];
-require 'connection.php';
+require_once 'connection.php';
 $conn = Connect();
 
 // SQL query to fetch information of registerd users and finds user match.
@@ -26,7 +26,7 @@ $stmt -> store_result();
 if ($stmt->fetch())  
 {
 	$_SESSION['login_user1']=$username; // Initializing Session
-	header("location: myrestaurant.php"); // Redirecting To Other Page
+	header("location: manageservices.php"); // Redirecting To Other Page
 } else {
 $error = "Username or Password is invalid";
 }

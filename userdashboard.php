@@ -80,7 +80,7 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
                             <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
                             <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            <li><a class="dropdown-item" href="logout_u.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -106,12 +106,12 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
                                 New Order
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-concierge-bell"></i>
                                 Services
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-shopping-cart"></i>
@@ -127,7 +127,7 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="contactus.php">
                                 <i class="fas fa-headset"></i>
                                 Support
                             </a>
@@ -139,7 +139,7 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
                             </a>
                         </li>
                         <li class="nav-item mt-4">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="logout_u.php">
                                 <i class="fas fa-sign-out-alt"></i>
                                 Logout
                             </a>
