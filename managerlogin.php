@@ -2,7 +2,7 @@
 include('login_m.php'); // Includes Login Script
 
 if(isset($_SESSION['login_user1'])){
-header("location: manageservices.php"); //Redirecting to myrestaurant Page
+header("location: manageservices.php"); //Redirecting to admin landing Page
 }
 ?>
 
@@ -155,6 +155,6 @@ header("location: manageservices.php"); //Redirecting to myrestaurant Page
             <p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
         </div>
     </footer>
-    
+
     </body>
 </html>

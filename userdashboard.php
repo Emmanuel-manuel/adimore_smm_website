@@ -26,6 +26,7 @@ if (!$result || mysqli_num_rows($result) == 0) {
 
 $user = mysqli_fetch_assoc($result);
 $fullname = $user['fullname'];
+$userId = $user['id']; //This defines the $userId variable before it's used in the stats queries
 
 // Fetch wallet balance
 $walletQuery = "SELECT balance FROM wallet WHERE fullname = '$fullname' LIMIT 1";
@@ -36,6 +37,19 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
 } else {
     $walletBalance = 0; // Default balance
 }
+
+
+// Stats Queries
+$totalOrdersQuery = "SELECT COUNT(*) AS total FROM orders WHERE user_id = '$userId'";
+$totalOrders = mysqli_fetch_assoc(mysqli_query($conn, $totalOrdersQuery))['total'];
+
+$activeOrdersQuery = "SELECT COUNT(*) AS total FROM orders WHERE user_id = '$userId' AND status = 'Processing'";
+$activeOrders = mysqli_fetch_assoc(mysqli_query($conn, $activeOrdersQuery))['total'];
+
+$completedOrdersQuery = "SELECT COUNT(*) AS total FROM orders WHERE user_id = '$userId' AND status = 'Completed'";
+$completedOrders = mysqli_fetch_assoc(mysqli_query($conn, $completedOrdersQuery))['total'];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +99,7 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
             <i class="fas fa-user-circle me-1"></i> <?php echo $username; ?>
           </button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="profile.php"><i class="fas fa-user me-2"></i>Profile</a></li>
             <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="logout_u.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
@@ -104,15 +118,15 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
         <ul class="nav flex-column">
           <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
           <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#newOrderModal"><i class="fas fa-plus-circle"></i> New Order</a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="fas fa-shopping-cart"></i> Orders</a></li>
           <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#rechargeModal"><i class="fas fa-credit-card"></i> Recharge Wallet</a></li>
           <li class="nav-item"><a class="nav-link" href="contactus.php"><i class="fas fa-headset"></i> Support</a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user-circle"></i> Profile</a></li>
           <li class="nav-item mt-4"><a class="nav-link" href="logout_u.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
       </div>
     </nav>
-
+    
     <!-- Main content -->
     <main class="col-md-10 ms-sm-auto main-content">
       <div class="row mb-4">
@@ -140,15 +154,27 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
       </div>
 
       <!-- Stats Section -->
-      <div class="row mb-4">
+        <div class="row mb-4">
         <div class="col-md-3 mb-3">
-          <div class="stat-card"><i class="fas fa-shopping-cart fa-2x text-primary"></i><div class="stat-number">15</div><p>Total Orders</p></div>
+            <div class="stat-card">
+            <i class="fas fa-shopping-cart fa-2x text-primary"></i>
+            <div class="stat-number"><?php echo $totalOrders; ?></div>
+            <p>Total Orders</p>
+            </div>
         </div>
         <div class="col-md-3 mb-3">
-          <div class="stat-card"><i class="fas fa-sync-alt fa-2x text-warning"></i><div class="stat-number">8</div><p>Active Orders</p></div>
+            <div class="stat-card">
+            <i class="fas fa-sync-alt fa-2x text-warning"></i>
+            <div class="stat-number"><?php echo $activeOrders; ?></div>
+            <p>Active Orders</p>
+            </div>
         </div>
         <div class="col-md-3 mb-3">
-          <div class="stat-card"><i class="fas fa-check-circle fa-2x text-success"></i><div class="stat-number">7</div><p>Completed Orders</p></div>
+            <div class="stat-card">
+            <i class="fas fa-check-circle fa-2x text-success"></i>
+            <div class="stat-number"><?php echo $completedOrders; ?></div>
+            <p>Completed Orders</p>
+            </div>
         </div>
         <div class="col-md-3 mb-3">
           <div class="announcement-card p-4">
@@ -166,11 +192,53 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
         </div>
         <div class="table-responsive">
           <table class="table table-hover">
-            <thead><tr><th>Order ID</th><th>Date</th><th>Service</th><th>Quantity</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
+            <thead><tr><th>Order ID</th><th>Date</th><th>Service</th><th>Link</th><th>Quantity</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
             <tbody>
-              <tr><td>#12567</td><td>2022-10-01</td><td>Instagram Followers</td><td>100</td><td>Ksh. 325.00</td><td class="status-completed">Completed</td><td><button class="btn btn-sm btn-outline-primary">View</button></td></tr>
-              <tr><td>#12566</td><td>2022-10-01</td><td>YouTube Views</td><td>200</td><td>Ksh. 450.00</td><td class="status-processing">Processing</td><td><button class="btn btn-sm btn-outline-primary">View</button></td></tr>
-              <tr><td>#12565</td><td>2022-10-01</td><td>TikTok Likes</td><td>150</td><td>Ksh. 262.50</td><td class="status-cancelled">Cancelled</td><td><button class="btn btn-sm btn-outline-primary">View</button></td></tr>
+                <?php
+                                    // Fetch user details from database (use only the columns you need)
+                    $query  = "SELECT id, fullname, email FROM customer WHERE username = ?";
+                    $stmt   = $conn->prepare($query);
+                    $stmt->bind_param("s", $username);
+                    $stmt->execute();
+                    $user   = $stmt->get_result()->fetch_assoc();
+
+                    if (!$user) {
+                        echo "<script>alert('User not found!'); window.location.href='customerlogin.php';</script>";
+                        exit();
+                    }
+
+                    $fullname = $user['fullname'];
+                    $userId   = (int)$user['id'];   // <-- we are going to refer to id column in customer table
+
+                    // Fetch recent orders for this user
+                    $ordersQuery = "SELECT * FROM orders WHERE user_id = '$userId' ORDER BY created_at DESC LIMIT 10";
+                    $ordersResult = mysqli_query($conn, $ordersQuery);
+
+                    if ($ordersResult && mysqli_num_rows($ordersResult) > 0) {
+                        while ($order = mysqli_fetch_assoc($ordersResult)) {
+                            // Status class for styling
+                            $statusClass = '';
+                            if ($order['status'] == 'Completed') $statusClass = 'status-completed';
+                            elseif ($order['status'] == 'Processing') $statusClass = 'status-processing';
+                            elseif ($order['status'] == 'Cancelled') $statusClass = 'status-cancelled';
+
+                            echo "<tr>
+                                    <td>#{$order['id']}</td>
+                                    <td>{$order['created_at']}</td>
+                                    <td>{$order['platform']}</td>
+                                    <td><a href='{$order['link']}' target='_blank'>View Link</a></td>
+                                    <td>{$order['quantity']}</td>
+                                    <td>Ksh. " . number_format($order['amount'], 2) . "</td>;
+                                    <td class='{$statusClass}'>{$order['status']}</td>
+                                    <td><button class='btn btn-sm btn-outline-primary' data-bs-toggle='modal' data-bs-target='#viewOrderModal' data-id='{$order['id']}'>View</button></td>
+                        
+                    
+                                </tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='8' class='text-center'>No recent orders found.</td></tr>";
+                    }
+                ?>
             </tbody>
           </table>
         </div>
@@ -179,6 +247,7 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
   </div>
 </div>
 
+<!-- BEGINNING OF MODALS -->
 <!-- New Order Modal -->
 <div class="modal fade" id="newOrderModal" tabindex="-1">
   <div class="modal-dialog">
@@ -246,6 +315,28 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
   </div></div>
 </div>
 
+<!-- View Order Modal -->
+<div class="modal fade" id="viewOrderModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Order Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="orderDetails">
+          <p class="text-center text-muted">Loading order details...</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- END OF MODALS -->
+
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -271,6 +362,31 @@ if ($walletResult && mysqli_num_rows($walletResult) > 0) {
   }
   if(quantityInput){quantityInput.addEventListener("input",calculateTotal);}
   function calculateTotal(){let qty=parseInt(quantityInput.value)||0;let total=qty*currentPrice;totalLabel.textContent=total.toFixed(2);}
+
+  // View Order - load details via AJAX
+const viewOrderModal = document.getElementById('viewOrderModal');
+if (viewOrderModal) {
+  viewOrderModal.addEventListener('show.bs.modal', function(event) {
+    const button = event.relatedTarget;
+    const orderId = button.getAttribute('data-id');
+    const orderDetails = document.getElementById('orderDetails');
+    orderDetails.innerHTML = "<p class='text-center text-muted'>Loading order details...</p>";
+
+    fetch("get_order.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: "id=" + orderId
+    })
+    .then(response => response.text())
+    .then(data => {
+      orderDetails.innerHTML = data;
+    })
+    .catch(error => {
+      orderDetails.innerHTML = "<p class='text-danger'>Error loading order details.</p>";
+    });
+  });
+}
+
 </script>
 
 <footer><div class="container"><p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p></div></footer>

@@ -65,8 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_query($conn, $updateWallet);
 
     // Insert order
-    $insertOrder = "INSERT INTO orders (user_id, platform, quantity, link, amount, status) 
-                    VALUES ('$userId', '$platform', '$quantity', '$link', '$totalAmount', 'Processing')";
+    $insertOrder = "INSERT INTO orders (user_id, platform, quantity, link, amount, status, created_at) 
+                    VALUES ('$userId', '$platform', '$quantity', '$link', '$totalAmount', 'Processing', NOW())";
     if (mysqli_query($conn, $insertOrder)) {
         echo "<script>
             alert('Order placed successfully!');

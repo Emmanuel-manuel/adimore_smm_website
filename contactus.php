@@ -5,7 +5,8 @@ session_start();
 <html>
 
   <head>
-    <title> Contact | SMM Website </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Contact | SMM Website </title>
   </head>
 
   <link rel="stylesheet" type = "text/css" href ="css/contactus.css">
@@ -70,7 +71,7 @@ if(isset($_SESSION['login_user1'])){
 
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-user"></span> Welcome <?php echo $_SESSION['login_user1']; ?> </a></li>
-            <li><a href="myrestaurant.php">MANAGER CONTROL PANEL</a></li>
+            <li><a href="#">MANAGER CONTROL PANEL</a></li>
             <li><a href="logout_m.php"><span class="glyphicon glyphicon-log-out"></span> Log Out </a></li>
           </ul>
 <?php
@@ -175,10 +176,10 @@ else {
           </div>
 
           <div class="form-group">
-           <textarea class="form-control" type="textarea" id="message" name="message" placeholder="Message" maxlength="140" rows="7"></textarea>
-           <span class="help-block"><p id="characterLeft" class="help-block">Max Character length : 140 </p></span>
+           <textarea class="form-control" type="textarea" id="message" name="message" placeholder="Message" maxlength="255" rows="7"></textarea>
+           <span class="help-block"><p id="characterLeft" class="help-block">Max Character length : 250 words </p></span>
           </div> 
-          <input type="submit" name="submit" type="button" id="submit" name="submit" class="btn btn-primary pull-right"/>    
+          <input type="submit" name="submit" id="submit" class="btn btn-primary pull-right" value="Send Message">    
         </form>
 
         

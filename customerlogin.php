@@ -11,6 +11,7 @@ header("location: userdashboard.php");
 <html>
 
   <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Guest Login | SMM website </title>
   </head>
 
@@ -151,6 +152,6 @@ header("location: userdashboard.php");
             <p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
         </div>
     </footer>
-    
+
     </body>
 </html>
