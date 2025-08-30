@@ -30,7 +30,7 @@ $email = $user['email'];
 $contact = $user['contact'];
 
 // Handle profile picture upload
-$profilePicture = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80"; // Default image
+$profilePicture = "images/profile_picture.png"; // Local default image
 
 // Check if user has a profile picture in the database
 if (!empty($user['profile_picture'])) {
@@ -146,11 +146,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['current_password'])) {
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
-                        <span>+5999-771-7171</span>
+                        <span><?php echo !empty($contact) ? $contact : 'No phone number provided'; ?></span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>rita@gmail.com</span>
+                        <span><?php echo !empty($email) ? $email : 'No email provided'; ?></span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-user"></i>
@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['current_password'])) {
             </div>
         </div>
         
-        <a href="logout.php" class="logout-btn">
+        <a href="logout_u.php" class="logout-btn">
             <i class="fas fa-lock"></i> Log Out
         </a>
     </div>
