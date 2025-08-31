@@ -104,9 +104,6 @@ $conn = Connect();
             <input type="text" class="form-control" name="contact" placeholder="Contact" required>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" name="address" placeholder="Address" required>
-          </div>
-          <div class="form-group">
             <input type="password" class="form-control" name="password" placeholder="Password" required>
           </div>
           <div class="form-group">
@@ -127,14 +124,13 @@ $conn = Connect();
               <th>Full Name</th>
               <th>Email</th>
               <th>Contact</th>
-              <th>Address</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
           <?php
             // Fetch Admins
-            $result_admins = $conn->query("SELECT username, fullname, email, contact, address FROM manager");
+            $result_admins = $conn->query("SELECT username, fullname, email, contact FROM manager");
             if ($result_admins && $result_admins->num_rows > 0) {
               while($row = $result_admins->fetch_assoc()) {
                 echo "<tr>
@@ -143,7 +139,6 @@ $conn = Connect();
                   <td>".$row['fullname']."</td>
                   <td>".$row['email']."</td>
                   <td>".$row['contact']."</td>
-                  <td>".$row['address']."</td>
                   <td>
                     <form action='user_action.php' method='POST' style='display:inline;'>
                       <input type='hidden' name='role' value='Admin'>
@@ -157,7 +152,7 @@ $conn = Connect();
             }
 
             // Fetch Users
-            $result_users = $conn->query("SELECT id, username, fullname, email, contact, address FROM customer");
+            $result_users = $conn->query("SELECT id, username, fullname, email, contact FROM customer");
             if ($result_users && $result_users->num_rows > 0) {
               while($row = $result_users->fetch_assoc()) {
                 echo "<tr>
@@ -166,7 +161,6 @@ $conn = Connect();
                   <td>".$row['fullname']."</td>
                   <td>".$row['email']."</td>
                   <td>".$row['contact']."</td>
-                  <td>".$row['address']."</td>
                   <td>
                     <form action='user_action.php' method='POST' style='display:inline;'>
                       <input type='hidden' name='role' value='User'>

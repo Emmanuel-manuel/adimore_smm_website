@@ -50,6 +50,29 @@ $completedOrdersQuery = "SELECT COUNT(*) AS total FROM orders WHERE user_id = '$
 $completedOrders = mysqli_fetch_assoc(mysqli_query($conn, $completedOrdersQuery))['total'];
 
 
+// Fetch active announcements (not expired)
+$announcementsQuery = "
+    SELECT * FROM announcement 
+    WHERE created_at >= NOW() - INTERVAL time_duration DAY
+    ORDER BY created_at DESC
+    LIMIT 5";
+$announcementsResult = mysqli_query($conn, $announcementsQuery);
+
+$announcements = [];
+if ($announcementsResult && mysqli_num_rows($announcementsResult) > 0) {
+    while ($row = mysqli_fetch_assoc($announcementsResult)) {
+        $announcements[] = $row;
+    }
+}
+
+// Count unexpired announcements
+$sql_announce = "SELECT COUNT(*) AS total 
+                 FROM announcement 
+                 WHERE created_at >= NOW() - INTERVAL time_duration DAY";
+$result_announce = $conn->query($sql_announce);
+$row_announce = $result_announce->fetch_assoc();
+$announcement_count = $row_announce['total'];
+
 ?>
 
 <!DOCTYPE html>
@@ -77,19 +100,39 @@ $completedOrders = mysqli_fetch_assoc(mysqli_query($conn, $completedOrdersQuery)
             <i class="fas fa-bell"></i> Notifications
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
               <?php
+              // Get user email
               $sql_user = "SELECT email FROM customer WHERE username='$username'";
               $result_user = $conn->query($sql_user);
+              $user_notifications = 0;
+
               if ($result_user && $result_user->num_rows > 0) {
                   $row_user = $result_user->fetch_assoc();
                   $user_email = $row_user['email'];
+
+                  // Count user-specific notifications (responses)
                   $sql_count = "SELECT COUNT(*) AS total FROM contact 
                                 WHERE Email='$user_email' AND Response IS NOT NULL AND Response <> ''";
+
                   $result_count = $conn->query($sql_count);
                   $row_count = $result_count->fetch_assoc();
-                  echo $row_count['total'];
-              } else {
-                  echo "0";
-              }
+                  $user_notifications = $row_count['total'];
+                  // echo $row_count['total'];
+              } 
+              // else {
+              //     echo "0";
+              // }
+              // Count unexpired announcements
+                  $sql_announce = "SELECT COUNT(*) AS total 
+                  FROM announcement 
+                  WHERE created_at >= NOW() - INTERVAL time_duration DAY";
+                  $result_announce = $conn->query($sql_announce);
+                  $row_announce = $result_announce->fetch_assoc();
+                  $announcement_count = $row_announce['total'];
+
+                  // Total notifications = user + announcements
+                  $total_notifications = $user_notifications + $announcement_count;
+
+                  echo $total_notifications;
               ?>
             </span>
           </a>
@@ -176,12 +219,21 @@ $completedOrders = mysqli_fetch_assoc(mysqli_query($conn, $completedOrdersQuery)
             <p>Completed Orders</p>
             </div>
         </div>
-        <div class="col-md-3 mb-3">
-          <div class="announcement-card p-4">
-            <h5><i class="fas fa-bullhorn me-2"></i> Announcements</h5>
-            <div class="mt-3"><h6>New Feature</h6><p class="text-muted">We have added a new feature. Check it out now!</p><button class="btn btn-sm btn-green">View Details</button></div>
-          </div>
-        </div>
+        <?php if (count($announcements) > 0): ?>
+          <?php foreach ($announcements as $a): ?>
+              <div class="mt-3 p-2 border-bottom">
+                  <h6><i class="fas fa-bullhorn me-1"></i> Announcement</h6>
+                  <p class="text-muted mb-1"><?php echo htmlspecialchars($a['announcement']); ?></p>
+                  <small class="text-secondary">
+                      <i class="fas fa-clock"></i> 
+                      Posted: <?php echo date("M j, Y g:i A", strtotime($a['created_at'])); ?>
+                      (for <?php echo $a['time_duration']; ?> days)
+                  </small>
+              </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p class="text-muted">No active announcements</p>
+      <?php endif; ?>
       </div>
 
       <!-- Recent Orders Section -->

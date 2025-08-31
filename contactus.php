@@ -1,5 +1,28 @@
 <?php
 session_start();
+
+// Process form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+  require 'connection.php';
+  $conn = Connect();
+
+  $Name = $conn->real_escape_string($_POST['name']);
+  $Email_Id = $conn->real_escape_string($_POST['email']);
+  $Mobile_No = $conn->real_escape_string($_POST['mobile']);
+  $Subject = $conn->real_escape_string($_POST['subject']);
+  $Message = $conn->real_escape_string($_POST['message']);
+
+  $query = "INSERT INTO contact (Name, Email, Mobile, Subject, Message) VALUES ('$Name', '$Email_Id', '$Mobile_No', '$Subject', '$Message')";
+  $success = $conn->query($query);
+
+  if ($success) {
+      $success_message = "Your message has been sent successfully!";
+  } else {
+      $error_message = "Error: " . $conn->error;
+  }
+
+  $conn->close();
+}
 ?>
 
 <html>
@@ -17,31 +40,27 @@ session_start();
   <body>
 
 
-
+<!-- Back to Top Button -->
     <button onclick="topFunction()" id="myBtn" title="Go to top">
       <span class="glyphicon glyphicon-chevron-up"></span>
     </button>
   
     <script type="text/javascript">
-      window.onscroll = function()
-      {
-        scrollFunction()
-      };
-
-      function scrollFunction(){
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-          document.getElementById("myBtn").style.display = "block";
-        } else {
-          document.getElementById("myBtn").style.display = "none";
-        }
-      }
-
-      function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
+     window.onscroll = function() { scrollFunction(); };
+    
+    function scrollFunction(){
+      document.getElementById("myBtn").style.display = 
+        (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) 
+        ? "block" : "none";
+    }
+    
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
       }
     </script>
 
+<!-- Navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top navigation-clean-search" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -155,6 +174,20 @@ else {
     <div class="container" >
     <div class="col-md-5" style="float: none; margin: 0 auto;">
       <div class="form-area">
+<!-- SUCCESS and ERROR messages -->
+      <?php if (isset($success_message)): ?>
+          <div class="alert alert-success">
+            <i class="fas fa-check-circle"></i> <?php echo $success_message; ?>
+          </div>
+        <?php endif; ?>
+        
+        <?php if (isset($error_message)): ?>
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i> <?php echo $error_message; ?>
+          </div>
+        <?php endif; ?>
+<!-- ............................................................ -->
+
         <form method="post" action="">
         <br style="clear: both">
           <h3 style="margin-bottom: 25px; text-align: center; font-size: 30px;"> Contact Form</h3>
@@ -189,25 +222,25 @@ else {
     </div>
 
     <?php
-if (isset($_POST['submit'])){
-require 'connection.php';
-$conn = Connect();
+// if (isset($_POST['submit'])){
+// require 'connection.php';
+// $conn = Connect();
 
-$Name = $conn->real_escape_string($_POST['name']);
-$Email_Id = $conn->real_escape_string($_POST['email']);
-$Mobile_No = $conn->real_escape_string($_POST['mobile']);
-$Subject = $conn->real_escape_string($_POST['subject']);
-$Message = $conn->real_escape_string($_POST['message']);
+// $Name = $conn->real_escape_string($_POST['name']);
+// $Email_Id = $conn->real_escape_string($_POST['email']);
+// $Mobile_No = $conn->real_escape_string($_POST['mobile']);
+// $Subject = $conn->real_escape_string($_POST['subject']);
+// $Message = $conn->real_escape_string($_POST['message']);
 
-$query = "INSERT into contact(Name,Email,Mobile,Subject,Message) VALUES('$Name','$Email_Id','$Mobile_No','$Subject','$Message')";
-$success = $conn->query($query);
+// $query = "INSERT into contact(Name,Email,Mobile,Subject,Message) VALUES('$Name','$Email_Id','$Mobile_No','$Subject','$Message')";
+// $success = $conn->query($query);
 
-if (!$success){
-  die("Couldnt enter data: ".$conn->error);
-}
+// if (!$success){
+//   die("Couldnt enter data: ".$conn->error);
+// }
 
-$conn->close();
-}
+// $conn->close();
+// }
 ?>
 
        <!-- WhatsApp Floating Button -->
@@ -220,11 +253,29 @@ $conn->close();
 <!-- FontAwesome (if not already loaded) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<footer>
+    <footer>
         <div class="container">
             <p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+    // Character counter for message textarea
+    $(document).ready(function(){
+      $('#message').keyup(function(){
+        var max = 250;
+        var len = $(this).val().length;
+        var char = max - len;
+        $('#characterLeft').text(char + ' characters remaining');
+        
+        if (char < 0) {
+          $('#characterLeft').css('color', 'red');
+        } else {
+          $('#characterLeft').css('color', 'gray');
+        }
+      });
+    });
+  </script>
 
 </body>
 

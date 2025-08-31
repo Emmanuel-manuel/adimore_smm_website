@@ -149,19 +149,6 @@
 
         <div class="row">
           <div class="form-group col-xs-12">
-            <label for="address"><span class="text-danger" style="margin-right: 5px;">*</span> Address: </label>
-            <div class="input-group">
-              <input class="form-control" id="address" type="text" name="address" placeholder="Address" required="">
-              <span class="input-group-btn">
-                <label class="btn btn-primary"><span class="glyphicon glyphicon-home" aria-hidden="true"></label>
-            </span>
-              </span>
-            </div>           
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="form-group col-xs-12">
             <label for="password"><span class="text-danger" style="margin-right: 5px;">*</span> Password: </label>
             <div class="input-group">
               <input class="form-control" id="password" type="password" name="password" placeholder="Password" required="">

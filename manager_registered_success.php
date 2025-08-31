@@ -1,7 +1,7 @@
 <html>
 
   <head>
-    <title> Manager Login | Le Cafe' </title>
+    <title> Manager Login | SMM website </title>
   </head>
 
   <link rel="stylesheet" type = "text/css" href ="css/manager_registered_success.css">
@@ -73,10 +73,9 @@ $fullname = $conn->real_escape_string($_POST['fullname']);
 $username = $conn->real_escape_string($_POST['username']);
 $email = $conn->real_escape_string($_POST['email']);
 $contact = $conn->real_escape_string($_POST['contact']);
-$address = $conn->real_escape_string($_POST['address']);
 $password = $conn->real_escape_string($_POST['password']);
 
-$query = "INSERT into MANAGER(fullname,username,email,contact,address,password) VALUES('" . $fullname . "','" . $username . "','" . $email . "','" . $contact . "','" . $address ."','" . $password ."')";
+$query = "INSERT into MANAGER(fullname,username,email,contact,password) VALUES('" . $fullname . "','" . $username . "','" . $email . "','" . $contact . "','" . $password ."')";
 $success = $conn->query($query);
 
 if (!$success){

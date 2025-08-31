@@ -15,11 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = $conn->real_escape_string($_POST['password']);
 
         if ($role == "Admin") {
-            $sql = "INSERT INTO manager (username, fullname, email, contact, address, password) 
-                    VALUES ('$username', '$fullname', '$email', '$contact', '$address', '$password')";
+            $sql = "INSERT INTO manager (username, fullname, email, contact, password) 
+                    VALUES ('$username', '$fullname', '$email', '$contact', '$password')";
         } else {
-            $sql = "INSERT INTO customer (fullname, username, email, contact, address, password) 
-                    VALUES ('$fullname', '$username', '$email', '$contact', '$address', '$password')";
+            $sql = "INSERT INTO customer (fullname, username, email, contact, password) 
+                    VALUES ('$fullname', '$username', '$email', '$contact', '$password')";
         }
         $conn->query($sql);
     }
