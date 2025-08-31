@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $conn->real_escape_string($_POST['username']);
         $email    = $conn->real_escape_string($_POST['email']);
         $contact  = $conn->real_escape_string($_POST['contact']);
-        $address  = $conn->real_escape_string($_POST['address']);
         $password = $conn->real_escape_string($_POST['password']);
 
         if ($role == "Admin") {

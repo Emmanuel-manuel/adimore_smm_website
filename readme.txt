@@ -9,15 +9,15 @@ FIRST Download
 
 4. Download the zip file/ download winrar
 
-5. Extract the file and copy "Online-Food-Order" folder
+5. Extract the file and copy "smm_website" folder
 
 6.Paste inside root directory/ where you install xammp local disk C: drive D: drive E: paste: (for xampp/htdocs, 
 
 7. Open PHPMyAdmin (http://localhost/phpmyadmin)
 
-8. Create a database with name foodorder
+8. Create a database with name 'adimore_smm_db'
 
-6. Import foodorder.sql file(given inside the zip package in SQL file folder)
+6. Import adimore_smm_db.sql file(given inside the zip package in SQL file folder)
 
-7.Run the script http://localhost/Online-Food-Order
+7.Run the script http://localhost/smm_website/index.php
 
