@@ -192,7 +192,7 @@
     <!-- Header Section -->
     <div class="wide">
         <div class="col-xs-5 line"><hr></div>
-        <div class="col-xs-2 logo"><img src="images/adimoresmm_logo.jpg" alt="ADIMORE SMM Logo"></div>
+        <div class="col-xs-2 logo"><img src="images/adimoresmm_logo.png" alt="ADIMORE SMM Logo"></div>
         <div class="col-xs-5 line"><hr></div>
         <div class="tagline">Africa's Premier SMM Panel</div>
         <p>Trusted by 42K+ Users and influencers</p>

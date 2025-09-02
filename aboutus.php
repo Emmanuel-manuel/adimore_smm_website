@@ -196,7 +196,7 @@
                             <ul class="feature-list">
                                 <li>High-quality Instagram followers, likes, and views</li>
                                 <li>Fast TikTok followers, likes, and video views</li>
-                                <li>Real YouTube subscribers, watch time, and comments</li>
+                                <li>YouTube subscribers, watch time, and comments</li>
                                 <li>Facebook page likes, post engagement, and shares</li>
                             </ul>
                         </div>
