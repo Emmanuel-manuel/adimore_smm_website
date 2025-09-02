@@ -23,13 +23,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['respond'])) {
 }
 
 // Fetch all feedback
-$sql = "SELECT * FROM contact ORDER BY Name ASC";
+$sql = "SELECT * FROM contact ORDER BY created_at DESC";
 $result = $conn->query($sql);
 $feedback_data = [];
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $feedback_data[] = $row;
     }
+}
+
+// Handle delete single feedback
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_single'])) {
+    $id = intval($_POST['id']);
+    $conn->query("DELETE FROM contact WHERE id = $id");
+}
+
+// Handle delete all feedback
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
+    $conn->query("TRUNCATE TABLE contact");
 }
 ?>
 
@@ -322,6 +333,11 @@ if ($result->num_rows > 0) {
             
             <!-- Main Content -->
             <div class="col-md-9">
+                <form method="POST" style="margin-bottom:20px;">
+                    <button type="submit" name="delete_all" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete All Feedback
+                    </button>
+                </form>
                 <?php if (count($feedback_data) > 0): ?>
                     <?php foreach ($feedback_data as $feedback): ?>
                         <div class="card">
@@ -336,6 +352,13 @@ if ($result->num_rows > 0) {
                                 </span>
                             </div>
                             <div class="feedback-item">
+                                <form method="POST" style="margin-top:10px;">
+                                    <input type="hidden" name="id" value="<?php echo $feedback['id']; ?>">
+                                    <button type="submit" name="delete_single" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i> Delete This Feedback
+                                    </button>
+                                </form>
+
                                 <div class="customer-info">
                                     <div class="customer-avatar">
                                         <?php echo strtoupper(substr($feedback['Name'], 0, 1)); ?>

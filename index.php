@@ -175,7 +175,7 @@
                     <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Sign Up <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="customersignup.php">User Sign-up</a></li>
-                            <li><a href="managersignup.php">Admin Sign-up</a></li>
+                            <!-- <li><a href="managersignup.php">Admin Sign-up</a></li> -->
                         </ul>
                     </li>
                     <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-log-in"></span> Login <span class="caret"></span></a>
@@ -195,7 +195,7 @@
         <div class="col-xs-2 logo"><img src="images/adimoresmm_logo.jpg" alt="ADIMORE SMM Logo"></div>
         <div class="col-xs-5 line"><hr></div>
         <div class="tagline">Africa's Premier SMM Panel</div>
-        <p>Trusted by 42K+ resellers and influencers</p>
+        <p>Trusted by 42K+ Users and influencers</p>
     </div>
 
     <!-- Main Content Container -->
@@ -271,15 +271,15 @@
         <h2 class="section-title">Trusted Worldwide for Social Media Growth</h2>
         
         <div class="row">
-            <div class="col-md-3 col-sm-6">
+            <!-- <div class="col-md-3 col-sm-6">
                 <div class="stats-box">
                     <div class="stats-number">3,259,228+</div>
                     <div class="stats-label">Total Orders</div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-3 col-sm-6">
                 <div class="stats-box">
-                    <div class="stats-number">$0.001</div>
+                    <div class="stats-number">$0.8</div>
                     <div class="stats-label">Price Starting</div>
                 </div>
             </div>
@@ -291,14 +291,14 @@
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="stats-box">
-                    <div class="stats-number">44,281+</div>
-                    <div class="stats-label">API Users</div>
+                    <div class="stats-number">42K+</div>
+                    <div class="stats-label">Registered Users</div>
                 </div>
             </div>
         </div>
 
         <!-- Testimonial Section -->
-        <h2 class="section-title">What Our Clients Say</h2>
+        <!-- <h2 class="section-title">What Our Clients Say</h2>
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -308,7 +308,7 @@
                     <div>★★★★★</div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- How It Works Section -->
         <h2 class="section-title">How to Get Started with ADIMORE-SMM</h2>
@@ -325,7 +325,7 @@
                 <div class="feature-box">
                     <div class="feature-icon"><span class="glyphicon glyphicon-credit-card"></span></div>
                     <h3>Add Funds</h3>
-                    <p>Top up using M-Pesa, PayPal, Crypto, Cards, or any local gateway you prefer.</p>
+                    <p>Top up using M-Pesa, Cards, or any local gateway you prefer.</p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -345,12 +345,12 @@
                 <div class="feature-box text-center">
                     <p>We support a wide range of secure and instant payment gateways so you can top up with ease:</p>
                     <div>
-                        <span class="payment-method">PayPal</span>
+                        <!-- <span class="payment-method">PayPal</span> -->
                         <span class="payment-method">VISA</span>
                         <span class="payment-method">M-Pesa</span>
-                        <span class="payment-method">Payoneer</span>
+                        <!-- <span class="payment-method">Payoneer</span>
                         <span class="payment-method">Skrill</span>
-                        <span class="payment-method">Crypto</span>
+                        <span class="payment-method">Crypto</span> -->
                     </div>
                 </div>
             </div>
@@ -373,9 +373,9 @@
                 <div class="col-md-6">
                     <h4>LEGAL</h4>
                     <ul class="list-unstyled">
-                        <li><a href="#">Terms</a></li>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Refund</a></li>
+                        <li><a href="terms.php">Terms & Conditions</a></li>
+                        <li><a href="terms.php#privacy">Privacy Policy</a></li>
+                        <li><a href="terms.php#refund">Refund Policy</a></li>
                         <li><a href="contactus.php">Need Help?</a></li>
                     </ul>
                 </div>

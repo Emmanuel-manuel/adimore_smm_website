@@ -5,7 +5,7 @@ FIRST Download
 
 2.VS CODE, "TEXT EDITOR" NOTEPAD++ OR SUBLIME TEXT 3 / ETC.
 
-3"Online-Food-Order"
+3"smm_website"
 
 4. Download the zip file/ download winrar
 

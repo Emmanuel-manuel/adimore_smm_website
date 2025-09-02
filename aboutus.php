@@ -124,7 +124,7 @@
                     <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Sign Up <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="customersignup.php">User Sign-up</a></li>
-                            <li><a href="managersignup.php">Admin Sign-up</a></li>
+                            <!-- <li><a href="managersignup.php">Admin Sign-up</a></li> -->
                         </ul>
                     </li>
                     <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-log-in"></span> Login <span class="caret"></span></a>
@@ -235,7 +235,7 @@
         <h2 class="section-title">Trusted by Users Worldwide</h2>
         
         <div class="row">
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <div class="branch-box">
                     <h3 class="branch-title">SMM Panel Nigeria</h3>
                     <p>Popular among creators and marketers, our Nigerian panel delivers real results for Instagram, TikTok, and YouTube.</p>
@@ -246,11 +246,11 @@
                     <h3 class="branch-title">SMM Panel USA</h3>
                     <p>Servicing the American market with premium social media growth services for all major platforms.</p>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-4">
                 <div class="branch-box">
-                    <h3 class="branch-title">TikTok Likes & Views</h3>
-                    <p>Specialized service for TikTok growth, helping content creators boost their presence on the fastest-growing platform.</p>
+                    <h3 class="branch-title">TikTok, Instagram, YouTube and Facebook Likes & Views</h3>
+                    <p>Specialized service for Social Media growth, helping content creators boost their presence on the fastest-growing platform.</p>
                 </div>
             </div>
         </div>
@@ -259,12 +259,12 @@
         <h2 class="section-title">Premium Features Built for Success</h2>
         
         <div class="row">
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div class="about-content">
                     <h3>Free Child Panel</h3>
                     <p>Spend over $2,500 and unlock your own branded panel — ready to serve your clients under your name.</p>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-6">
                 <div class="about-content">
                     <h3>Market-Beating Prices</h3>
@@ -290,9 +290,9 @@
                 <div class="col-md-6">
                     <h4>LEGAL</h4>
                     <ul class="list-unstyled">
-                        <li><a href="#">Terms</a></li>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Refund</a></li>
+                        <li><a href="terms.php">Terms & Conditions</a></li>
+                        <li><a href="terms.php#privacy">Privacy Policy</a></li>
+                        <li><a href="terms.php#refund">Refund Policy</a></li>
                         <li><a href="contactus.php">Need Help?</a></li>
                     </ul>
                 </div>

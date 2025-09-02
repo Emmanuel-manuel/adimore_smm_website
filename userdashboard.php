@@ -161,7 +161,7 @@ $announcement_count = $row_announce['total'];
         <ul class="nav flex-column">
           <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
           <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#newOrderModal"><i class="fas fa-plus-circle"></i> New Order</a></li>
-          <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+          <!-- <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#viewOrderModal"><i class="fas fa-shopping-cart"></i> Orders</a></li> -->
           <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#rechargeModal"><i class="fas fa-credit-card"></i> Recharge Wallet</a></li>
           <li class="nav-item"><a class="nav-link" href="contactus.php"><i class="fas fa-headset"></i> Support</a></li>
           <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user-circle"></i> Profile</a></li>
@@ -323,18 +323,42 @@ $announcement_count = $row_announce['total'];
             </select>
           </div>
           <div class="mb-3">
-            <label for="quantity" class="form-label">Quantity</label>
-            <input type="number" class="form-control" id="quantity" name="quantity"  placeholder="100" min="100" max="10000" required>
-            <div class="form-text">Minimum: 100, Maximum: 10,000</div>
+            <label for="quantity" class="form-label">Expected Subscribers/Followers</label>
+            <input type="number" class="form-control" id="quantity" name="quantity"  placeholder="e.g 1,000" min="100" max="100,000" required>
+            <div class="form-text">Enter how many subscribers/followers you want (Min: 100, Max: 100,000)</div>
           </div>
           <div class="mb-3">
             <label for="link" class="form-label">Profile/Video Link</label>
             <input type="url" class="form-control" id="link" name="link" placeholder="https://..." required>
           </div>
           <div class="p-3 bg-light rounded">
-            <p>Price per Subscriber/Follower: <strong>Ksh. <span id="priceLabel">0.00</span></strong></p>
+            <p>Price per 1,000 Subscriber/Follower: <strong>Ksh. <span id="priceLabel">0.00</span></strong></p>
             <p>Total: <strong>Ksh. <span id="totalLabel">0.00</span></strong></p>
             <p>Wallet Balance: <strong>Ksh. <?php echo number_format($walletBalance, 2); ?></strong></p>
+
+            <br>
+            <!-- Quick Guide Inserted Here -->
+            <div class="quick-guide mt-3">
+                                    <h6>🧭 Quick Guide: How to Place an Order</h6>
+                                    <ol class="mb-0">
+                                        <li>Select your preferred service category and service.</li>
+                                        <li>Paste your target link (e.g., Instagram post, TikTok profile, YouTube video).</li>
+                                        <li>Enter the desired number of Followers/Subscribers.</li>
+                                        <li>Click "Place Order" and let Adimorehub.co.ke do the magic. 🚀</li>
+                                    </ol>
+            </div>
+
+            <br>
+            <div class="quick-guide mt-3">
+                                    <h6>⚠ Important Information</h6>
+                                    <ol class="mb-0">
+                                        <li>Start Time May Vary: When the server is busy, delays can occur.</li>
+                                        <li>Cheap Services are slow: We cannot speed-up or cancel cheap services. They are always slow. Use them when u are ready to wait for long. If want fast results use fast working services.</li>
+                                        <li>Be Patient: Some services start immediately, others may take hours or even days to complete depending on the queue.</li>
+                                        <li>Read Descriptions: Always check each service’s notes — some have drop rates, some are stable. All services use real user interaction.</li>
+                                    </ol>
+            </div>
+
           </div>
         </form>
       </div>
@@ -349,7 +373,10 @@ $announcement_count = $row_announce['total'];
     <div class="modal-header"><h5 class="modal-title">Recharge Wallet</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
     <div class="modal-body">
       <form id="rechargeForm" action="process_payment.php" method="POST">
-        <div class="mb-3"><label for="amount" class="form-label">Amount (Ksh.)</label><input type="number" class="form-control" id="amount" name="amount"  placeholder="1000"min="100" required></div>
+        <div class="mb-3"><label for="amount" class="form-label">Amount (Ksh.)</label>
+        <input type="number" class="form-control" id="amount" name="amount"  placeholder="1000" min="5" max="100,000" required>
+        <div class="form-text">Enter how much you want to top up (Min: sh. 5, Max: 100,000)</div>
+      </div>
         <div class="mb-3">
           <label class="form-label">Payment Method</label>
           <div class="form-check"><input class="form-check-input" type="radio" name="method" value="mpesa" checked><label class="form-check-label">M-Pesa</label></div>
@@ -413,7 +440,10 @@ $announcement_count = $row_announce['total'];
     });
   }
   if(quantityInput){quantityInput.addEventListener("input",calculateTotal);}
-  function calculateTotal(){let qty=parseInt(quantityInput.value)||0;let total=qty*currentPrice;totalLabel.textContent=total.toFixed(2);}
+  function calculateTotal(){
+    let qty=parseInt(quantityInput.value)||0; // expected subscribers
+    let total=(qty / 1000) * currentPrice; // price is per 1000
+    totalLabel.textContent=total.toFixed(2);}
 
   // View Order - load details via AJAX
 const viewOrderModal = document.getElementById('viewOrderModal');

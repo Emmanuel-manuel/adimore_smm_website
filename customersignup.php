@@ -59,7 +59,7 @@
             <li><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Sign Up <span class="caret"></span> </a>
                 <ul class="dropdown-menu">
               <li> <a href="customersignup.php"> User Sign-up</a></li>
-              <li> <a href="managersignup.php"> Admin Sign-up</a></li>
+              <!-- <li> <a href="managersignup.php"> Admin Sign-up</a></li> -->
     
             </ul>
             </li>

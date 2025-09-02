@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ | SMM Panel</title>
+    <link rel="stylesheet" href="css/userdashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
     <style>
         body {
@@ -127,7 +128,7 @@
                     <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Sign Up <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="customersignup.php">User Sign-up</a></li>
-                            <li><a href="managersignup.php">Admin Sign-up</a></li>
+                            <!-- <li><a href="managersignup.php">Admin Sign-up</a></li> -->
                         </ul>
                     </li>
                     <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-log-in"></span> Login <span class="caret"></span></a>

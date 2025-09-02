@@ -124,13 +124,14 @@ $conn = Connect();
               <th>Full Name</th>
               <th>Email</th>
               <th>Contact</th>
+              <th>Date Created</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
           <?php
             // Fetch Admins
-            $result_admins = $conn->query("SELECT username, fullname, email, contact FROM manager");
+            $result_admins = $conn->query("SELECT username, fullname, email, contact, created_at FROM manager");
             if ($result_admins && $result_admins->num_rows > 0) {
               while($row = $result_admins->fetch_assoc()) {
                 echo "<tr>
@@ -139,6 +140,7 @@ $conn = Connect();
                   <td>".$row['fullname']."</td>
                   <td>".$row['email']."</td>
                   <td>".$row['contact']."</td>
+                  <td>".$row['created_at']."</td>
                   <td>
                     <form action='user_action.php' method='POST' style='display:inline;'>
                       <input type='hidden' name='role' value='Admin'>
@@ -152,7 +154,7 @@ $conn = Connect();
             }
 
             // Fetch Users
-            $result_users = $conn->query("SELECT id, username, fullname, email, contact FROM customer");
+            $result_users = $conn->query("SELECT id, username, fullname, email, contact, created_at FROM customer");
             if ($result_users && $result_users->num_rows > 0) {
               while($row = $result_users->fetch_assoc()) {
                 echo "<tr>
@@ -161,6 +163,7 @@ $conn = Connect();
                   <td>".$row['fullname']."</td>
                   <td>".$row['email']."</td>
                   <td>".$row['contact']."</td>
+                  <td>".$row['created_at']."</td>
                   <td>
                     <form action='user_action.php' method='POST' style='display:inline;'>
                       <input type='hidden' name='role' value='User'>

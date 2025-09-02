@@ -99,7 +99,7 @@ $conn = Connect();
           <input type="text" class="form-control" name="platform" placeholder="Social Media Platform" required>
         </div>
         <div class="form-group">
-          <input type="number" class="form-control" name="price" placeholder="Price per view/subscription" required>
+          <input type="number" class="form-control" name="price" placeholder="Price per 1000 views/subscriptions" required>
         </div>
         <button type="submit" class="btn btn-success">Add Service</button>
       </form>
