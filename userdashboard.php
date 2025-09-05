@@ -469,6 +469,56 @@ if (viewOrderModal) {
   });
 }
 
+// This script handles M-Pesa payment
+document.addEventListener('DOMContentLoaded', function() {
+    const rechargeForm = document.getElementById('rechargeForm');
+    
+    if (rechargeForm) {
+        rechargeForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const method = formData.get('method');
+            
+            if (method === 'mpesa') {
+                // Use AJAX for M-Pesa to avoid page reload
+                const amount = formData.get('amount');
+                const mobileNumber = formData.get('mobileNumber');
+                
+                fetch('process_mpesa.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `amount=${amount}&mobileNumber=${mobileNumber}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        // Close the modal
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('rechargeModal'));
+                        modal.hide();
+                        
+                        // Refresh page after 3 seconds to update balance
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000);
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while processing your request.');
+                });
+            } else {
+                // For card payments, submit normally
+                this.submit();
+            }
+        });
+    }
+});
 </script>
 
 <footer><div class="container"><p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p></div></footer>
