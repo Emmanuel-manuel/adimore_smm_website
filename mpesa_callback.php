@@ -30,12 +30,15 @@ if (isset($data->Body->stkCallback)) {
         $user_result = mysqli_query($conn, $user_query);
         $transaction = mysqli_fetch_assoc($user_result);
         
-        // Update user wallet
-        $user_id = $transaction['user_id'];
-        $amount = $transaction['amount'];
-        
-        $wallet_query = "UPDATE wallet SET balance = balance + $amount WHERE user_id = '$user_id'";
-        mysqli_query($conn, $wallet_query);
+        if ($transaction) {//added this
+            // Update user wallet
+            $user_id = $transaction['user_id'];
+            $amount = $transaction['amount'];
+            
+            $wallet_query = "UPDATE wallet SET balance = balance + $amount WHERE user_id = '$user_id'";
+            mysqli_query($conn, $wallet_query);
+        }//and this
+
         
         // Log the response
         file_put_contents('mpesa_log.txt', "SUCCESS: " . $response . PHP_EOL, FILE_APPEND);

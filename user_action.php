@@ -11,7 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $conn->real_escape_string($_POST['username']);
         $email    = $conn->real_escape_string($_POST['email']);
         $contact  = $conn->real_escape_string($_POST['contact']);
-        $password = $conn->real_escape_string($_POST['password']);
+        // it encrypts the password in the table
+        $password_plain = $_POST['password'];
+        $password = password_hash($password_plain, PASSWORD_DEFAULT);
+
 
         if ($role == "Admin") {
             $sql = "INSERT INTO manager (username, fullname, email, contact, password) 

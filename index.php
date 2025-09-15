@@ -17,7 +17,7 @@
         }
         .wide {
             text-align: center;
-            padding: 60px 0;
+            padding: 80px 0 60px;
             background: linear-gradient(135deg, #4a89dc 0%, #6cbbf2 100%);
             color: white;
             margin-bottom: 30px;
@@ -25,6 +25,8 @@
         .logo img {
             max-width: 180px;
             margin: 20px 0;
+            width: 100%;
+            height: auto;
         }
         .tagline {
             font-size: 24px;
@@ -148,6 +150,57 @@
             margin: 30px 0;
             text-align: center;
         }
+        
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .wide {
+                padding: 100px 0 40px;
+            }
+            .logo img {
+                max-width: 150px;
+            }
+            .tagline {
+                font-size: 20px;
+            }
+            .section-title {
+                font-size: 24px;
+            }
+            .feature-box {
+                padding: 20px;
+            }
+            .stats-number {
+                font-size: 28px;
+            }
+            .line {
+                display: none;
+            }
+            .navbar-collapse {
+                border-top: 1px solid transparent;
+                box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+            }
+            .navbar-fixed-top {
+                position: fixed;
+                top: 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tagline {
+                font-size: 18px;
+            }
+            .wide p {
+                font-size: 14px;
+            }
+            .feature-icon {
+                font-size: 30px;
+            }
+            .stats-box {
+                padding: 15px;
+            }
+            .orderblock {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -172,13 +225,15 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Sign Up <span class="caret"></span></a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Sign Up <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="customersignup.php">User Sign-up</a></li>
                             <!-- <li><a href="managersignup.php">Admin Sign-up</a></li> -->
                         </ul>
                     </li>
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-log-in"></span> Login <span class="caret"></span></a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-log-in"></span> Login <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="customerlogin.php">User Login</a></li>
                             <li><a href="managerlogin.php">Admin Login</a></li>
@@ -191,11 +246,15 @@
 
     <!-- Header Section -->
     <div class="wide">
-        <div class="col-xs-5 line"><hr></div>
-        <div class="col-xs-2 logo"><img src="images/adimoresmm_logo.png" alt="ADIMORE SMM Logo"></div>
-        <div class="col-xs-5 line"><hr></div>
-        <div class="tagline">Africa's Premier SMM Panel</div>
-        <p>Trusted by 42K+ Users and influencers</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="logo"><img src="images/adimoresmm_logo.png" alt="ADIMORE SMM Logo"></div>
+                    <div class="tagline">Africa's Premier SMM Panel</div>
+                    <p>Trusted by 42K+ Users and influencers</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Main Content Container -->
@@ -218,21 +277,21 @@
         <h2 class="section-title">Why Choose ADIMORE-SMM?</h2>
         
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="feature-box">
                     <div class="feature-icon"><span class="glyphicon glyphicon-flash"></span></div>
                     <h3>Stability Unleashed</h3>
                     <p>Our infrastructure runs 24/7 with advanced tech to ensure uninterrupted service. Day or night, expect stability that won't flinch.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="feature-box">
                     <div class="feature-icon"><span class="glyphicon glyphicon-headphones"></span></div>
                     <h3>Always-On Support</h3>
                     <p>Every question deserves an answer — fast. Our 24/7 support team responds with empathy and clarity, keeping your experience smooth.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-12">
                 <div class="feature-box">
                     <div class="feature-icon"><span class="glyphicon glyphicon-dashboard"></span></div>
                     <h3>Intuitive Experience</h3>
@@ -245,7 +304,7 @@
         <h2 class="section-title">Our Best Selling SMM Services</h2>
         
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-6">
                 <div class="feature-box">
                     <h3>Popular Services Include:</h3>
                     <ul class="service-list">
@@ -257,7 +316,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-6">
                 <div class="feature-box">
                     <h3>Cheapest SMM Panel for Resellers</h3>
                     <p>ADIMORE-SMM is your plug for low-cost, high-quality SMM services — crafted especially for resellers ready to scale and dominate.</p>
@@ -271,64 +330,51 @@
         <h2 class="section-title">Trusted Worldwide for Social Media Growth</h2>
         
         <div class="row">
-            <!-- <div class="col-md-3 col-sm-6">
-                <div class="stats-box">
-                    <div class="stats-number">3,259,228+</div>
-                    <div class="stats-label">Total Orders</div>
-                </div>
-            </div> -->
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="stats-box">
                     <div class="stats-number">$0.8</div>
                     <div class="stats-label">Price Starting</div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="stats-box">
                     <div class="stats-number">24/7</div>
                     <div class="stats-label">Fastest Support</div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="stats-box">
                     <div class="stats-number">42K+</div>
                     <div class="stats-label">Registered Users</div>
                 </div>
             </div>
-        </div>
-
-        <!-- Testimonial Section -->
-        <!-- <h2 class="section-title">What Our Clients Say</h2>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="testimonial">
-                    <p class="testimonial-text">"I recommend this panel to every serious reseller. Reliable and professional."</p>
-                    <p class="testimonial-author">— Jamal A., SMM Reseller</p>
-                    <div>★★★★★</div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="stats-box">
+                    <div class="stats-number">100%</div>
+                    <div class="stats-label">Satisfaction</div>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <!-- How It Works Section -->
         <h2 class="section-title">How to Get Started with ADIMORE-SMM</h2>
         
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="feature-box">
                     <div class="feature-icon"><span class="glyphicon glyphicon-user"></span></div>
                     <h3>Sign Up</h3>
                     <p>Create your free account in seconds and unlock your dashboard.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="feature-box">
                     <div class="feature-icon"><span class="glyphicon glyphicon-credit-card"></span></div>
                     <h3>Add Funds</h3>
                     <p>Top up using M-Pesa, Cards, or any local gateway you prefer.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-4">
                 <div class="feature-box">
                     <div class="feature-icon"><span class="glyphicon glyphicon-stats"></span></div>
                     <h3>Track & Grow</h3>
@@ -345,12 +391,8 @@
                 <div class="feature-box text-center">
                     <p>We support a wide range of secure and instant payment gateways so you can top up with ease:</p>
                     <div>
-                        <!-- <span class="payment-method">PayPal</span> -->
                         <span class="payment-method">VISA</span>
                         <span class="payment-method">M-Pesa</span>
-                        <!-- <span class="payment-method">Payoneer</span>
-                        <span class="payment-method">Skrill</span>
-                        <span class="payment-method">Crypto</span> -->
                     </div>
                 </div>
             </div>
@@ -361,7 +403,7 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 col-sm-6">
                     <h4>QUICK ACCESS</h4>
                     <ul class="list-unstyled">
                         <li><a href="customersignup.php">Register</a></li>
@@ -370,7 +412,7 @@
                         <li><a href="aboutus.php">Our Story</a></li>
                     </ul>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-sm-6">
                     <h4>LEGAL</h4>
                     <ul class="list-unstyled">
                         <li><a href="terms.php">Terms & Conditions</a></li>
@@ -382,6 +424,7 @@
             </div>
             <hr>
             <p class="text-center">Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
+            <p class="text-center">Developed by <a href="mailto:emmanuelsystems5@gmail.com">emmanuelSystems</a></p>
         </div>
     </footer>
 

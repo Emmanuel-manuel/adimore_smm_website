@@ -10,6 +10,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f8f9fa;
             color: #333;
+            padding-top: 70px; /* Adjusted for fixed navbar */
         }
         .navbar-brand {
             font-weight: bold;
@@ -17,7 +18,7 @@
         }
         .wide {
             text-align: center;
-            padding: 60px 0;
+            padding: 80px 0 60px;
             background: linear-gradient(135deg, #4a89dc 0%, #6cbbf2 100%);
             color: white;
             margin-bottom: 30px;
@@ -47,6 +48,7 @@
             margin-bottom: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             text-align: center;
+            height: 100%;
         }
         .branch-title {
             color: #4a89dc;
@@ -97,6 +99,40 @@
             margin-right: 10px;
             font-size: 28px;
         }
+        
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            body {
+                padding-top: 60px;
+            }
+            .wide {
+                padding: 70px 0 40px;
+            }
+            .tagline {
+                font-size: 22px;
+            }
+            .about-content {
+                padding: 20px;
+            }
+            .icon-heading {
+                font-size: 20px;
+            }
+            .feature-list li {
+                padding: 8px 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tagline {
+                font-size: 18px;
+            }
+            .section-title {
+                font-size: 22px;
+            }
+            .branch-box {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -121,13 +157,15 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Sign Up <span class="caret"></span></a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Sign Up <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="customersignup.php">User Sign-up</a></li>
                             <!-- <li><a href="managersignup.php">Admin Sign-up</a></li> -->
                         </ul>
                     </li>
-                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-log-in"></span> Login <span class="caret"></span></a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-log-in"></span> Login <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="customerlogin.php">User Login</a></li>
                             <li><a href="managerlogin.php">Admin Login</a></li>
@@ -140,7 +178,9 @@
 
     <!-- Header Section -->
     <div class="wide">
-        <div class="tagline">It's not our <font color="red"><strong>work life</strong></font>, it's our <font color="green"><strong><em>life's work</em>.</strong></font></div>
+        <div class="container">
+            <div class="tagline">It's not our <font color="red"><strong>work life</strong></font>, it's our <font color="green"><strong><em>life's work</em>.</strong></font></div>
+        </div>
     </div>
 
     <!-- Main Content Container -->
@@ -167,14 +207,14 @@
                     <p>At AdimoreHub.com, we are more than just an SMM panel. We are a partner committed to helping you grow authentically and effectively.</p>
                     
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6">
                             <ul class="feature-list">
                                 <li>💎 Cheapest Prices in Africa</li>
                                 <li>⚡ Fast Delivery</li>
                                 <li>🔒 Real & Targeted Services</li>
                             </ul>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6">
                             <ul class="feature-list">
                                 <li>🎧 24/7 Support – Always-on customer service for quick solutions.</li>
                                 <li>💳 Secure Payments – Local options like M-Pesa and Mobile Money.</li>
@@ -192,7 +232,7 @@
             <div class="col-md-12">
                 <div class="about-content">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6">
                             <ul class="feature-list">
                                 <li>High-quality Instagram followers, likes, and views</li>
                                 <li>Fast TikTok followers, likes, and video views</li>
@@ -200,7 +240,7 @@
                                 <li>Facebook page likes, post engagement, and shares</li>
                             </ul>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6">
                             <ul class="feature-list">
                                 <li>Telegram members, channel views, and engagement</li>
                                 <li>Twitter (X), Threads, Snapchat, LinkedIn, Shazam, and more</li>
@@ -235,22 +275,22 @@
         <h2 class="section-title">Trusted by Users Worldwide</h2>
         
         <div class="row">
-            <!-- <div class="col-md-4">
-                <div class="branch-box">
-                    <h3 class="branch-title">SMM Panel Nigeria</h3>
-                    <p>Popular among creators and marketers, our Nigerian panel delivers real results for Instagram, TikTok, and YouTube.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="branch-box">
-                    <h3 class="branch-title">SMM Panel USA</h3>
-                    <p>Servicing the American market with premium social media growth services for all major platforms.</p>
-                </div>
-            </div> -->
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="branch-box">
                     <h3 class="branch-title">TikTok, Instagram, YouTube and Facebook Likes & Views</h3>
                     <p>Specialized service for Social Media growth, helping content creators boost their presence on the fastest-growing platform.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="branch-box">
+                    <h3 class="branch-title">Social Media Management</h3>
+                    <p>Comprehensive solutions for managing and growing your social media presence across all major platforms.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="branch-box">
+                    <h3 class="branch-title">24/7 Customer Support</h3>
+                    <p>Our dedicated support team is always available to assist you with any questions or issues you may have.</p>
                 </div>
             </div>
         </div>
@@ -259,16 +299,16 @@
         <h2 class="section-title">Premium Features Built for Success</h2>
         
         <div class="row">
-            <!-- <div class="col-md-6">
-                <div class="about-content">
-                    <h3>Free Child Panel</h3>
-                    <p>Spend over $2,500 and unlock your own branded panel — ready to serve your clients under your name.</p>
-                </div>
-            </div> -->
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-6">
                 <div class="about-content">
                     <h3>Market-Beating Prices</h3>
                     <p>Access world-class social media growth tools at unbeatable rates. High quality. Low cost. No compromise.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="about-content">
+                    <h3>Fast & Reliable Delivery</h3>
+                    <p>Get your orders delivered quickly and efficiently with our optimized delivery system that ensures quality results.</p>
                 </div>
             </div>
         </div>
@@ -278,7 +318,7 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 col-sm-6">
                     <h4>QUICK ACCESS</h4>
                     <ul class="list-unstyled">
                         <li><a href="customersignup.php">Register</a></li>
@@ -287,7 +327,7 @@
                         <li><a href="aboutus.php">Our Story</a></li>
                     </ul>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-sm-6">
                     <h4>LEGAL</h4>
                     <ul class="list-unstyled">
                         <li><a href="terms.php">Terms & Conditions</a></li>
@@ -299,6 +339,7 @@
             </div>
             <hr>
             <p class="text-center">Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
+            <p class="text-center">Developed by <a href="mailto:emmanuelsystems5@gmail.com">emmanuelSystems</a></p>
         </div>
     </footer>
 

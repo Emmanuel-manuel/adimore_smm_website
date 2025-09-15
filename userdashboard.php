@@ -29,7 +29,9 @@ $fullname = $user['fullname'];
 $userId = $user['id']; //This defines the $userId variable before it's used in the stats queries
 
 // Fetch wallet balance
-$walletQuery = "SELECT balance FROM wallet WHERE fullname = '$fullname' LIMIT 1";
+// $walletQuery = "SELECT balance FROM wallet WHERE fullname = '$fullname' LIMIT 1";
+$walletQuery = "SELECT balance FROM wallet WHERE user_id = '$userId' LIMIT 1";
+
 $walletResult = mysqli_query($conn, $walletQuery);
 if ($walletResult && mysqli_num_rows($walletResult) > 0) {
     $wallet = mysqli_fetch_assoc($walletResult);
@@ -485,6 +487,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 const amount = formData.get('amount');
                 const mobileNumber = formData.get('mobileNumber');
                 
+                // Show loading state
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+                
                 fetch('process_mpesa.php', {
                     method: 'POST',
                     headers: {
@@ -492,7 +500,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     body: `amount=${amount}&mobileNumber=${mobileNumber}`
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data.success) {
                         alert(data.message);
@@ -510,7 +523,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('An error occurred while processing your request.');
+                    alert('An error occurred while processing your request. Check console for details.');
+                })
+                .finally(() => {
+                    // Restore button state
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
                 });
             } else {
                 // For card payments, submit normally

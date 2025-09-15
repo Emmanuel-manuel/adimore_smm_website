@@ -1,0 +1,18 @@
+MPESA Request: Array
+(
+    [amount] => 5
+    [mobileNumber] => 0798814567
+)
+
+MPESA Request: Array
+(
+    [amount] => 5
+    [mobileNumber] => 254798814567
+)
+
+MPESA Request: Array
+(
+    [amount] => 5
+    [mobileNumber] => 798814567
+)
+
