@@ -1,99 +1,78 @@
-<html>
-
-  <head>
-    <title> Manager Login | SMM website </title>
-  </head>
-
-  <link rel="stylesheet" type = "text/css" href ="css/manager_registered_success.css">
-  <link rel="stylesheet" type = "text/css" href ="css/bootstrap.min.css">
-  <script type="text/javascript" src="js/jquery.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-
-  <body>
-
-  
-    <button onclick="topFunction()" id="myBtn" title="Go to top">
-      <span class="glyphicon glyphicon-chevron-up"></span>
-    </button>
-  
-    <script type="text/javascript">
-      window.onscroll = function()
-      {
-        scrollFunction()
-      };
-
-      function scrollFunction(){
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-          document.getElementById("myBtn").style.display = "block";
-        } else {
-          document.getElementById("myBtn").style.display = "none";
-        }
-      }
-
-      function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-      }
-    </script>
-
-    <nav class="navbar navbar-inverse navbar-fixed-top navigation-clean-search" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.php">SMM website</a>
-        </div>
-
-        <div class="collapse navbar-collapse " id="myNavbar">
-          <ul class="nav navbar-nav">
-            <li class="active" ><a href="index.php">Home</a></li>
-            <li><a href="aboutus.php">About</a></li>
-            <li><a href="contactus.php">Contact Us</a></li>
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up </a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
-          </ul>
-        </div>
-
-      </div>
-    </nav>
-
 <?php
+// manager_registered_success.php
 
 require 'connection.php';
 $conn = Connect();
 
+// Escape inputs
 $fullname = $conn->real_escape_string($_POST['fullname']);
 $username = $conn->real_escape_string($_POST['username']);
-$email = $conn->real_escape_string($_POST['email']);
-$contact = $conn->real_escape_string($_POST['contact']);
-$password = $conn->real_escape_string($_POST['password']);
+$email    = $conn->real_escape_string($_POST['email']);
+$contact  = $conn->real_escape_string($_POST['contact']);
+$password_plain = $_POST['password'];
 
-$query = "INSERT into MANAGER(fullname,username,email,contact,password) VALUES('" . $fullname . "','" . $username . "','" . $email . "','" . $contact . "','" . $password ."')";
+// Hash the password
+$hashed_password = password_hash($password_plain, PASSWORD_DEFAULT);
+
+$query = "INSERT INTO manager (username, fullname, email, contact, password) 
+          VALUES ('$username', '$fullname', '$email', '$contact', '$hashed_password')";
 $success = $conn->query($query);
 
-if (!$success){
-	die("Couldnt enter data: ".$conn->error);
+if (!$success) {
+    die("Couldn’t enter data: " . $conn->error);
 }
 
 $conn->close();
-
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manager Registered | SMM Website</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <style>
+    body {
+      padding-top: 70px;
+      background-color: #f8f9fa;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .jumbotron {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      padding: 30px 0;
+      margin-top: 40px;
+    }
+    footer a {
+      color: #ddd;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="jumbotron text-center">
+      <h2>Welcome <?php echo htmlspecialchars($fullname); ?>!</h2>
+      <h3>Your account has been created successfully.</h3>
+      <p>Login now from <a href="managerlogin.php">HERE</a></p>
+    </div>
+  </div>
 
-<div class="container">
-	<div class="jumbotron" style="text-align: center;">
-		<h2> <?php echo "Welcome $fullname!" ?> </h2>
-		<h1>Your account has been created.</h1>
-		<p>Login Now from <a href="managerlogin.php">HERE</a></p>
-	</div>
-</div>
-
-    </body>
+  <footer>
+    <div class="container text-center">
+      <p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
+      <p>Developed by <a href="mailto:emmanuelsystems5@gmail.com">emmanuelSystems</a></p>
+    </div>
+  </footer>
+</body>
 </html>

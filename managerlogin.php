@@ -153,6 +153,7 @@ header("location: manageservices.php"); //Redirecting to admin landing Page
     <footer>
         <div class="container">
             <p>Copyright 2025 &copy; SMM Panel. All rights reserved.</p>
+            <p>Developed by <a href="mailto:emmanuelsystems5@gmail.com">emmanuelSystems</a></p>
         </div>
     </footer>
 
