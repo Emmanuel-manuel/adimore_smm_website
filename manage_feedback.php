@@ -1,15 +1,7 @@
 <?php
-// Send Email using PHPMailer
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require 'PHPMailer/Exception.php';
-require 'PHPMailer/PHPMailer.php';
-require 'PHPMailer/SMTP.php';
-
-
 require_once 'connection.php';
 include('session_m.php');
+require_once 'config_mail.php'; // central email config
 
 // No need to check $login_session here as session_m.php already handles the redirect
 
@@ -26,50 +18,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['respond'])) {
 
 
         // ✅ Send Email using PHPMailer
-        
-        $mail = new PHPMailer(true);
-
         try {
-            // Server settings
-            $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'mynameme75@gmail.com'; // my Gmail email
-            $mail->Password   = 'eewpzdcdhrixkphd'; // my Gmail APP password
-            $mail->SMTPSecure = 'tls';
-            $mail->Port       = 587;
-
-            // Sender & recipient
-            $mail->setFrom('mynameme75@gmail.com', 'AdimoreHub Support');
-            $mail->addAddress($email); // user's email
-
-            // Content
-            $mail->isHTML(true);
+            $mail = getMailer(); // ✅ load pre-configured mailer
+            $mail->addAddress($email); // user’s email
             $mail->Subject = 'Response to your feedback';
             $mail->Body    = "
                 <h3>Hello,</h3>
                 <p>Thank you for your feedback. Here is our response:</p>
-                <blockquote style='border-left:4px solid #6c5ce7; padding-left:10px;'>
-                    $response
-                </blockquote>
+                <blockquote style='border-left:4px solid #6c5ce7; padding-left:10px;'>$response</blockquote>
                 <p>Best regards,<br>AdimoreHub Support Team</p>
             ";
             $mail->AltBody = "Hello,\n\nThank you for your feedback. Here is our response:\n\n$response\n\nBest regards,\nAdimoreHub Support Team";
-
-            //these  two lines are for displaying error (for debugging purposes)
-            $mail->SMTPDebug = 0; // 2 or 3 for more details. Keep it at 2 or 3 only when troubleshooting
-            $mail->Debugoutput = 'html';
 
             $mail->send();
             $success .= " An email has also been sent to the user.";
         } catch (Exception $e) {
             $error = "Response saved, but email could not be sent. Error: {$mail->ErrorInfo}";
         }
-
-
-
-
-
 
 
 
