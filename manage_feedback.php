@@ -1,11 +1,17 @@
 <?php
+// Send Email using PHPMailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
+
+
 require_once 'connection.php';
 include('session_m.php');
 
-if (!isset($login_session)) {
-    header('Location: managerlogin.php'); 
-    exit();
-}
+// No need to check $login_session here as session_m.php already handles the redirect
 
 $conn = Connect();
 
@@ -17,6 +23,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['respond'])) {
     
     if ($conn->query($sql)) {
         $success = "Response submitted successfully!";
+
+
+        // ✅ Send Email using PHPMailer
+        
+        $mail = new PHPMailer(true);
+
+        try {
+            // Server settings
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'mynameme75@gmail.com'; // my Gmail email
+            $mail->Password   = 'eewpzdcdhrixkphd'; // my Gmail APP password
+            $mail->SMTPSecure = 'tls';
+            $mail->Port       = 587;
+
+            // Sender & recipient
+            $mail->setFrom('mynameme75@gmail.com', 'AdimoreHub Support');
+            $mail->addAddress($email); // user's email
+
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Response to your feedback';
+            $mail->Body    = "
+                <h3>Hello,</h3>
+                <p>Thank you for your feedback. Here is our response:</p>
+                <blockquote style='border-left:4px solid #6c5ce7; padding-left:10px;'>
+                    $response
+                </blockquote>
+                <p>Best regards,<br>AdimoreHub Support Team</p>
+            ";
+            $mail->AltBody = "Hello,\n\nThank you for your feedback. Here is our response:\n\n$response\n\nBest regards,\nAdimoreHub Support Team";
+
+            //these  two lines are for displaying error (for debugging purposes)
+            $mail->SMTPDebug = 0; // 2 or 3 for more details. Keep it at 2 or 3 only when troubleshooting
+            $mail->Debugoutput = 'html';
+
+            $mail->send();
+            $success .= " An email has also been sent to the user.";
+        } catch (Exception $e) {
+            $error = "Response saved, but email could not be sent. Error: {$mail->ErrorInfo}";
+        }
+
+
+
+
+
+
+
+
+
     } else {
         $error = "Error: " . $conn->error;
     }
@@ -36,11 +93,17 @@ if ($result->num_rows > 0) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_single'])) {
     $id = intval($_POST['id']);
     $conn->query("DELETE FROM contact WHERE id = $id");
+    // Refresh the page to see changes
+    header("Location: manage_feedback.php");
+    exit();
 }
 
 // Handle delete all feedback
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
     $conn->query("TRUNCATE TABLE contact");
+    // Refresh the page to see changes
+    header("Location: manage_feedback.php");
+    exit();
 }
 ?>
 
@@ -50,9 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Feedback | SMM Panel</title>
-    <link rel="stylesheet" type="text/css" href="css/managefeedback.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #6c5ce7;
@@ -274,25 +336,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
             .customer-avatar {
                 margin-bottom: 10px;
             }
+            
+            .admin-container {
+                padding: 15px;
+            }
+            
+            .page-header {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 24px;
+            }
+            
+            .card-header {
+                padding: 10px 15px;
+            }
+            
+            .feedback-item {
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
+        <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.php">SMM Panel</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.php">ADIMORE-SMM</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="aboutus.php">About</a></li>
                     <li><a href="contactus.php">Contact Us</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><i class="fas fa-user"></i> Welcome <?php echo $login_session; ?></a></li>
                     <li><a href="manageservices.php">Manage Services</a></li>
                     <li class="active"><a href="manage_feedback.php">Manage Feedback</a></li>
-                    <li class="fas fa-sign-out-alt"><a href="logout_m.php"> Log Out</a></li>
+                    <li><a href="logout_m.php"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
                 </ul>
             </div>
         </div>
@@ -318,7 +410,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
         
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-4">
                 <div class="sidebar">
                     <div class="list-group">
                         <a href="manageservices.php" class="list-group-item">Manage Services</a>
@@ -326,15 +418,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
                         <a href="post_notifications.php" class="list-group-item">Post Notifications</a>
                         <a href="manage_feedback.php" class="list-group-item active">Manage Users Feedback</a>
                         <a href="manage_orders.php" class="list-group-item">Manage Orders</a>
-                        <a href="logout_m.php"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                        <a href="logout_m.php" class="list-group-item"><i class="fas fa-sign-out-alt"></i> Log Out</a>
                     </div>
                 </div>
             </div>
             
             <!-- Main Content -->
-            <div class="col-md-9">
+            <div class="col-md-9 col-sm-8">
                 <form method="POST" style="margin-bottom:20px;">
-                    <button type="submit" name="delete_all" class="btn btn-danger">
+                    <button type="submit" name="delete_all" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete ALL feedback? This action cannot be undone.')">
                         <i class="fas fa-trash"></i> Delete All Feedback
                     </button>
                 </form>
@@ -342,7 +434,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
                     <?php foreach ($feedback_data as $feedback): ?>
                         <div class="card">
                             <div class="card-header">
-                                Feedback from <?php echo $feedback['Name']; ?>
+                                Feedback from <?php echo htmlspecialchars($feedback['Name']); ?>
                                 <span class="pull-right">
                                     <i class="far fa-clock"></i> 
                                     <?php 
@@ -354,7 +446,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
                             <div class="feedback-item">
                                 <form method="POST" style="margin-top:10px;">
                                     <input type="hidden" name="id" value="<?php echo $feedback['id']; ?>">
-                                    <button type="submit" name="delete_single" class="btn btn-danger btn-sm">
+                                    <button type="submit" name="delete_single" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this feedback?')">
                                         <i class="fas fa-trash-alt"></i> Delete This Feedback
                                     </button>
                                 </form>
@@ -364,17 +456,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
                                         <?php echo strtoupper(substr($feedback['Name'], 0, 1)); ?>
                                     </div>
                                     <div>
-                                        <h4><?php echo $feedback['Name']; ?></h4>
+                                        <h4><?php echo htmlspecialchars($feedback['Name']); ?></h4>
                                         <p>
-                                            <i class="fas fa-envelope"></i> <?php echo $feedback['Email']; ?> | 
-                                            <i class="fas fa-phone"></i> <?php echo $feedback['Mobile']; ?>
+                                            <i class="fas fa-envelope"></i> <?php echo htmlspecialchars($feedback['Email']); ?> | 
+                                            <i class="fas fa-phone"></i> <?php echo htmlspecialchars($feedback['Mobile']); ?>
                                         </p>
                                     </div>
                                 </div>
                                 
                                 <div class="feedback-content">
                                     <div class="subject">
-                                        <i class="fas fa-tag"></i> <?php echo $feedback['Subject']; ?>
+                                        <i class="fas fa-tag"></i> <?php echo htmlspecialchars($feedback['Subject']); ?>
                                     </div>
                                     <div class="message">
                                         <?php echo nl2br(htmlspecialchars($feedback['Message'])); ?>
@@ -391,7 +483,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
                                 <?php endif; ?>
                                 
                                 <form method="POST" class="response-form">
-                                    <input type="hidden" name="email" value="<?php echo $feedback['Email']; ?>">
+                                    <input type="hidden" name="email" value="<?php echo htmlspecialchars($feedback['Email']); ?>">
                                     <div class="form-group">
                                         <label for="response-<?php echo $feedback['Email']; ?>">
                                             <i class="fas fa-edit"></i> Write your response:
@@ -429,7 +521,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
     </a>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
     <script>
         // Back to top button
         $(document).ready(function(){
